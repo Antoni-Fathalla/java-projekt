@@ -8,165 +8,202 @@ public class project1 {
    
     public static void main(String[] args) {
         
+                                 
         Scanner scan = new Scanner(System.in);
-                                    
+       
         String information = """
-                        -------------------------------------------------------------välkommen till Tensta fight--------------------------------------------------------------
+                        -------------------------------------------------------------The Final Breakout--------------------------------------------------------------
+                        
+                                                    Step into the ring and prepare for epic brawls in this pulse-pounding fighting game! 
+                                                Battle against the best opponents around the world, using strategy and skill to come out on top. 
+                                                    Will you rise to become the new champion of the arena, or will you fall in defeat? 
+                                                                                    The fight is on!
 
-                                                            För attack-lista skriv (Lista)                För att spela skriv (Start)
+                                                        For Attack-list write (List)                To start the game write Start (Start)
+                        ----------------------------------------------------------------------------------------------------------------------------------------------
                 """;
 
         System.out.println(information);
         
-        String laeeb = scan.nextLine();
+        // Denna While loop gör det möjligt för spelaren att välja att antingen se attack-listan både för botten och spelarens egna attacker genom att skriva List eller endast L.
+       // Eller genom att skriva start så startar man spelet direkt. Allt annat som man skriver kommer inte gå igenom och man får invalid input.
+        while(true){
+            String laeeb = scan.nextLine();
+            if (laeeb.equals("List") || laeeb.equals("list") || laeeb.equals("L") || laeeb.equals("l"))
+            {
+                System.out.println(("Your Attacks:"));
+                System.out.println("[1] Accuracy: 95%   Damage: -3hp");
+                System.out.println("[2] Accuracy: 70%   Damage: -8hp");
+                System.out.println("[3] Accuracy: 50%   Damage: -15hp");
+                System.out.println("[4] Accuracy: 30%   Damage: -25hp");
+                System.out.println("[5] Accuracy: 5%    Damage: -90hp");
+                System.out.println("\nPress enter to see The legendary fighters attacks");
+                scan.nextLine();
+                System.out.println("The legendary fighters attacks:");
+                System.out.println("[1] Accuracy: 95%   Damage: -5hp");
+                System.out.println("[2] Accuracy: 70%   Damage: -12hp");
+                System.out.println("[3] Accuracy: 50%   Damage: -18hp");
+                System.out.println("[4] Accuracy: 30%   Damage: -30hp");
+                System.out.println("[5] Accuracy: 5%    Damage: -100hp");
+                System.out.print("\nPress enter to start the game!!!");
+                scan.nextLine();
+            }
+            else if(laeeb.equalsIgnoreCase("Start") || laeeb.equalsIgnoreCase("start") || laeeb.equalsIgnoreCase("START") || laeeb.equals("S") || laeeb.equals("s"))
+            {
+                System.out.print("\nChoose a name: ");
+                String Username = scan.nextLine();
+                System.out.println("Welcome to The Final Breakout " +Username);
+                break;
+                
+            }
+            else{
+                System.out.println("Invalid input, write Start or List");
+                continue;
+            }
 
-        if (laeeb.equals("Lista") || laeeb.equals("lista"))
-    {
-        System.out.println("(1)Attack 1 har 95% chans att träffa och gör 3 skada");
-        System.out.println("(2)Attack 2 har 70% chans att träffa och gör 8 skada");
-        System.out.println("(3)Attack 3 har 50% chans att träffa och gör 15 skada");
-        System.out.println("(4)Attack 4 har 30% chans att träffa och gör 25 skada");
-        System.out.println("(5)Attack 5 har 50% chans att träffa och gör 90 skada");
-        System.out.print("Tryck enter för att starta matchen");
-        scan.nextLine();
-    }
-        
-       
-        System.out.print("\nVälj ett namn: ");
-        String Username = scan.nextLine();
-        System.out.println("välkommen till tensta " +Username);
-       
-        while(Player_HP>0)
+            int Username = 0;
+            String U =Integer.toString(Username);
+
+            System.out.print("\nChoose a name: ");
+            U = scan.nextLine();
+            System.out.println("Welcome to The Final Breakout " +U);
+            break;
+        }    
+
+        while(Player_HP>0 && Bot_HP >0)
         {
+            System.out.println("\nMoves: [1]-3hp (95%)     [2]-8hp (70%)    [3]-15hp (50%)   [4]-25hp (30%)   [5]-90hp (5%) ");
             Player_Attacks(scan);
-            //Bot_Attacks();
-            System.out.println("Bot hp: "+Bot_HP);
-            System.out.println("Spelare hp: "+Player_HP);
+            Bot_Attacks();
+            System.out.println("\nThe legendary fighter hp: "+Bot_HP);
+            System.out.println("Player hp: "+Player_HP);
+            scan.nextLine();
+            clearScreen();
         }
     
+        if (Bot_HP <=0)
+        {
+            System.out.println("You killed the legendary fighter");
+            System.out.println("Game over!!!");
+        }
+        else
+        {
+            System.out.println("The legendary fighter killed you");
+            System.out.println("Game over!!!");
+        }
     }
-
-    
     
     static boolean Player_Attacks(Scanner scan)
     {
-        System.out.println("\nGör ditt drag!!!");
-        
-        String attack = scan.nextLine();
-
-
-        if (attack.equals("1"))
+        while(true)
         {
+
+            System.out.println("Choose your move!!!");
+    
+            
+            String attack = scan.nextLine();
             double random = Math.random()*100;
+    
+    
+            if (attack.equals("1"))
+            {
+                return Spelare_attck(random, 5, 3);
+            }
+    
+            else if (attack.equals("2"))
+            {
+                return Spelare_attck(random, 30, 8);
+            }
+    
+            else if (attack.equals("3"))
+            {
+                return Spelare_attck(random, 50, 15);
+            }
+    
+            else if (attack.equals("4"))
+            {
+              return Spelare_attck(random, 70, 25);
+            }
+    
+            else if (attack.equals("5"))
+            {
+                return Spelare_attck(random, 95, 90);
+            }
+    
+            else{
+                System.out.println("invalid input");
+                continue;
+            }
 
-            if(5<=random && random<=100)
-            {
-                System.out.println("Träff");
-                Bot_HP = Bot_HP-3;
-                return true;
-            }
-            else
-            {
-                System.out.println("Attack 1 missade!");
-                System.out.println(Bot_HP);
-                return false;
-            }
         }
-
-        if (attack.equals("2"))
+    }
+    public static boolean Spelare_attck(double random, int min, int skada)
+    {
+        if(min<=random && random<=100)
         {
-            double random = Math.random()*100;
-
-            if(30<=random && random<=100)
-            {
-                System.out.println("Träff");
-                Bot_HP = Bot_HP-8;
-                return true;
-            }
-            else
-            {
-                System.out.println("Attack 2 missade!");
-                System.out.println(Bot_HP);
-                return false;
-            }
+            System.out.println("Critical hit!!!");
+            Bot_HP -= skada;
+            return true;
         }
-
-        if (attack.equals("3"))
+        else
         {
-            double random = Math.random()*100;
-
-            if(50<=random && random<=100)
-            {
-                System.out.println("Träff");
-                Bot_HP = Bot_HP-15;
-                return true;
-            }
-            else
-            {
-                System.out.println("Attack 3 missade!");
-                System.out.println(Bot_HP);
-                return false;
-            }
+            System.out.println("Unfortunatly you missed!");
+            return false;
         }
-
-        if (attack.equals("4"))
-        {
-            double random = Math.random()*100;
-
-            if(70<=random && random<=100)
-            {
-                System.out.println("Träff");
-                Bot_HP = Bot_HP-25;
-                return true;
-            }
-            else
-            {
-                System.out.println("Attack 4 missade!");
-                System.out.println(Bot_HP);
-                return false;
-            }
-        }
-
-        if (attack.equals("5"))
-        {
-            double random = Math.random()*100;
-
-            if(95<=random && random<=100)
-            {
-                System.out.println("Träff");
-                Bot_HP = Bot_HP-90;
-                return true;
-            }
-            else
-            {
-                System.out.println("Attack 5 missade!");
-                System.out.println(Bot_HP);
-                return false;
-            }
-        }
-
-        return false;
-
-
     }
 
     static boolean Bot_Attacks()
     {
-        System.out.println("\nbottens tur: ");
-       
-        {
-            double random = Math.random()*100;
+        System.out.println("\nThe legendary fighters turn: ");
+        double random = Math.random()*100;
+        int x = (int)(Math.random()*(5)+1);
+            switch(x){
+                case 1:
+                    if(random<=5 && random<=100)
+                    {
+                        System.out.println("The legendary fighter got a hit with attack1");
+                        Player_HP = Player_HP-5;
+                        return true;
+                    }
+                case 2:
+                    if(random<=30 && random<=100)
+                    {
+                        System.out.println("The legendary fighter got hit with attack2");
+                        Player_HP -= 12;
+                        return true;
+                    }
 
-            if(Bot_HP>=75 && Player_HP==100)
-            {
+                case 3:
+                    if(random<=50 && random<=100)
+                    {
+                        System.out.println("The legendary fighter got a hit with attack3");
+                        Player_HP -= 18;
+                        return true;
+                    }
+
+                case 4:
+                    if(random<=70 && random<=100)
+                    {
+                        System.out.println("The legendary fighter got a hit with attack4");
+                        Player_HP -= 30;
+                        return true;
+                    }   
+                    
+                    case 5:
+                    if(random<=5 && random<=100)
+                    {
+                        System.out.println("The legendary fighter got a critical hit");
+                        Player_HP -= 100;
+                        return true;
+                    }    
                 
-                Player_HP = Player_HP-70;
+                default: 
+                    System.out.println("The legendary fighter missed");
+                    return false;
             }
-            
-            return false;
-        }
+    }
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
     }
 }
-
-
-
