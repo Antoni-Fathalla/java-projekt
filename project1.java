@@ -2,16 +2,17 @@ import java.util.Scanner;
 
 
 public class project1 {
-
+    static Scanner scan = new Scanner(System.in);
     static int Player_HP = 100;
     static int Bot_HP = 100;
    
     public static void main(String[] args) {
         
-                                 
-        Scanner scan = new Scanner(System.in);
+        while(true)
+            {
+                
        
-        String information = """
+            String information = """
                         -------------------------------------------------------------The Final Breakout--------------------------------------------------------------
                         
                                                     Step into the ring and prepare for epic brawls in this pulse-pounding fighting game! 
@@ -23,81 +24,103 @@ public class project1 {
                         ----------------------------------------------------------------------------------------------------------------------------------------------
                 """;
 
-        System.out.println(information);
+            System.out.println(information);
         
         // Denna While loop gör det möjligt för spelaren att välja att antingen se attack-listan både för botten och spelarens egna attacker genom att skriva List eller endast L.
        // Eller genom att skriva start så startar man spelet direkt. Allt annat som man skriver kommer inte gå igenom och man får invalid input.
-        while(true){
-            String laeeb = scan.nextLine();
-            if (laeeb.equals("List") || laeeb.equals("list") || laeeb.equals("L") || laeeb.equals("l"))
-            {
-                System.out.println(("Your Attacks:"));
-                System.out.println("[1] Accuracy: 95%   Damage: -3hp");
-                System.out.println("[2] Accuracy: 70%   Damage: -8hp");
-                System.out.println("[3] Accuracy: 50%   Damage: -15hp");
-                System.out.println("[4] Accuracy: 30%   Damage: -25hp");
-                System.out.println("[5] Accuracy: 5%    Damage: -90hp");
-                System.out.println("\nPress enter to see The legendary fighters attacks");
-                scan.nextLine();
-                System.out.println("The legendary fighters attacks:");
-                System.out.println("[1] Accuracy: 95%   Damage: -5hp");
-                System.out.println("[2] Accuracy: 70%   Damage: -12hp");
-                System.out.println("[3] Accuracy: 50%   Damage: -18hp");
-                System.out.println("[4] Accuracy: 30%   Damage: -30hp");
-                System.out.println("[5] Accuracy: 5%    Damage: -100hp");
-                System.out.print("\nPress enter to start the game!!!");
-                scan.nextLine();
-            }
-            else if(laeeb.equalsIgnoreCase("Start") || laeeb.equalsIgnoreCase("start") || laeeb.equalsIgnoreCase("START") || laeeb.equals("S") || laeeb.equals("s"))
-            {
-                System.out.print("\nChoose a name: ");
-                String Username = scan.nextLine();
-                System.out.println("Welcome to The Final Breakout " +Username);
-                break;
+            while(true){
+                String laeeb = scan.nextLine();
+                if (laeeb.equals("List") || laeeb.equals("list") || laeeb.equals("L") || laeeb.equals("l"))
+                {
+                    spelare_lista();
+                    bot_lista();
+                }
+                else if(laeeb.equals("Start") || laeeb.equals("start") || laeeb.equals("START") || laeeb.equals("S") || laeeb.equals("s"))
+                {
+                    System.out.print("\nChoose a name: ");
+                    String Username = scan.nextLine();
+                    System.out.println("Welcome to The Final Breakout " +Username);
+                    break;
                 
+                }
+                else
+                {
+                    System.out.println("Invalid input, write Start or List");
+                    continue;
+                }
+
+                int Username = 0;
+                String U =Integer.toString(Username);
+
+                System.out.print("\nChoose a name: ");
+                U = scan.nextLine();
+                System.out.println("Welcome to The Final Breakout " +U);
+                break;
+            }    
+
+            while(Player_HP>0 && Bot_HP >0)
+            {
+                Player_Attacks(scan);
+                Bot_Attacks();
+                System.out.println("\nThe legendary fighter hp: "+Bot_HP);
+                System.out.println("Player hp: "+Player_HP);
+                scan.nextLine();
+                clearScreen();
             }
-            else{
-                System.out.println("Invalid input, write Start or List");
+    
+            if (Bot_HP <=0)
+            {
+                System.out.println("You killed the legendary fighter");
+                System.out.println("Game over!!!");
+            }
+            else
+            {
+                System.out.println("The legendary fighter killed you");
+                System.out.println("Game over!!!");
+            }
+
+            System.out.println("Type restart if you want to play again!!");
+            String restarter = scan.nextLine();
+            if( restarter.equals("restart"))
+            {
+                Player_HP = 100;
+                Bot_HP = 100;
                 continue;
             }
-
-            int Username = 0;
-            String U =Integer.toString(Username);
-
-            System.out.print("\nChoose a name: ");
-            U = scan.nextLine();
-            System.out.println("Welcome to The Final Breakout " +U);
-            break;
-        }    
-
-        while(Player_HP>0 && Bot_HP >0)
-        {
-            System.out.println("\nMoves: [1]-3hp (95%)     [2]-8hp (70%)    [3]-15hp (50%)   [4]-25hp (30%)   [5]-90hp (5%) ");
-            Player_Attacks(scan);
-            Bot_Attacks();
-            System.out.println("\nThe legendary fighter hp: "+Bot_HP);
-            System.out.println("Player hp: "+Player_HP);
+        }
+    }   
+    
+    static boolean spelare_lista(){
+        System.out.println(("Your Attacks:"));
+                   
+            System.out.println("[1] Accuracy: 95%   Damage: -3hp");
+            System.out.println("[2] Accuracy: 70%   Damage: -8hp");
+            System.out.println("[3] Accuracy: 50%   Damage: -15hp");
+            System.out.println("[4] Accuracy: 30%   Damage: -25hp");
+            System.out.println("[5] Accuracy: 5%    Damage: -90hp");
+            System.out.println("\nPress enter to continue:");
             scan.nextLine();
-            clearScreen();
-        }
-    
-        if (Bot_HP <=0)
-        {
-            System.out.println("You killed the legendary fighter");
-            System.out.println("Game over!!!");
-        }
-        else
-        {
-            System.out.println("The legendary fighter killed you");
-            System.out.println("Game over!!!");
-        }
+            return false;
     }
-    
+
+    static boolean bot_lista(){
+    System.out.println("The legendary fighters attacks:");
+    System.out.println("[1] Accuracy: 95%   Damage: -5hp");
+    System.out.println("[2] Accuracy: 70%   Damage: -12hp");
+    System.out.println("[3] Accuracy: 50%   Damage: -18hp");
+    System.out.println("[4] Accuracy: 30%   Damage: -30hp");
+    System.out.println("[5] Accuracy: 5%    Damage: -100hp");
+    System.out.print("\nPress enter to start the game!!!");
+    scan.nextLine();
+    return false;
+    }
+        
     static boolean Player_Attacks(Scanner scan)
     {
         while(true)
         {
 
+            System.out.println("");
             System.out.println("Choose your move!!!");
     
             
@@ -130,6 +153,11 @@ public class project1 {
                 return Spelare_attck(random, 95, 90);
             }
     
+            else if(attack.equals("6") || attack.equals("list") || attack.equals("List") || attack.equals("LIST"))
+            {
+                spelare_lista();
+                continue;
+            }
             else{
                 System.out.println("invalid input");
                 continue;
@@ -161,14 +189,14 @@ public class project1 {
                 case 1:
                     if(random<=5 && random<=100)
                     {
-                        System.out.println("The legendary fighter got a hit with attack1");
+                        System.out.println("The legendary fighter got a hit with Attack1");
                         Player_HP = Player_HP-5;
                         return true;
                     }
                 case 2:
                     if(random<=30 && random<=100)
                     {
-                        System.out.println("The legendary fighter got hit with attack2");
+                        System.out.println("The legendary fighter got hit with Attack2");
                         Player_HP -= 12;
                         return true;
                     }
@@ -176,7 +204,7 @@ public class project1 {
                 case 3:
                     if(random<=50 && random<=100)
                     {
-                        System.out.println("The legendary fighter got a hit with attack3");
+                        System.out.println("The legendary fighter got a hit with Attack3");
                         Player_HP -= 18;
                         return true;
                     }
@@ -184,7 +212,7 @@ public class project1 {
                 case 4:
                     if(random<=70 && random<=100)
                     {
-                        System.out.println("The legendary fighter got a hit with attack4");
+                        System.out.println("The legendary fighter got a hit with Attack4");
                         Player_HP -= 30;
                         return true;
                     }   
